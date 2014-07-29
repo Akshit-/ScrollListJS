@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <script src="ItemLister.js"></script>
+  <script>
+  	var list;
+
+	var scrollData = function(list_items) {
+		
+		list = new ItemLister({
+			
+			id: 'calList',
+			data: list_items, // An array of data
+			
+			getItemView: function( index) {
+									
+				var html = [];
+				
+				var itemView = document.createElement( 'div');
+				html.push( '<h1 class="title">' + index + '</h2>');
+				
+				itemView.innerHTML = html.join( '');
+				
+				return itemView;
+				
+			}
+			
+		});
+		
+	};
+
+  </script>
+
+</head>
+<script>
+
+var items =[];
+
+	for	(var i = 1; i <= 3000; i++) {
+    	items.push(i);
+	}
+
+	scrollData(items);
+
+</script>
+<body>
+<div id="calList"></div>
+</body>
+</html>
