@@ -24,12 +24,12 @@ ItemLister.prototype.init = function() {
 	this.div = document.getElementById( this.id);
 		
 	//showing the first items
-	var count = this.data.length;
+	var count = that.data.length;
 	
 	for ( x = 0; x < this.range.max && x < count; x++)
-		this._initializeItemListView( x);
+		that._initializeItemListView( x);
 	
-	this.range.end = x;
+	that.range.end = x;
 
 
 	//adding mouse events
@@ -46,14 +46,17 @@ ItemLister.prototype.init = function() {
 	});
 	
 	//adding DOMMouseScroll event for firefox
-	event = 'DOMMouseScroll';
+	var isFirefox = (navigator.userAgent.indexOf("Gecko") !== -1);
 
-	w.addEventListener( event, function( evt) {
+
+	// Firefox only
+	if (isFirefox){                     
+        	w.addEventListener("DOMMouseScroll", function(evt){
 		
-		that.scrollListener( evt);
+				that.scrollListener(evt);
 		
-	});
-	
+			},false);
+	}
 
 };
 
@@ -70,6 +73,7 @@ ItemLister.prototype.scrollListener = function( event) {
 	
 	if ( dY > 0) { 
 		// UP scrolling
+		console.log('scroll up');
 		
 		if ( pageHeight > pageY ) {
 			
@@ -87,7 +91,8 @@ ItemLister.prototype.scrollListener = function( event) {
 	} else { 
 
 		// DOWN scrolling
-				
+		console.log('scroll down');
+
 		if ( bottomPosition - pageHeight > pageY) {
 			
 			itemList._removeFromTop();
@@ -185,6 +190,10 @@ ItemLister.prototype._getItemListView = function( index) {
 	
 };
 
+/*
+When a JavaScript date has gone bad, 
+"Don't call me, I'll callback you. I promise!"
+*/
 
 ItemLister.prototype.range = {
 	max: 10,
